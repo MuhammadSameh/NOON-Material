@@ -1,0 +1,17 @@
+.favBrands{
+    /* padding: 0 0 0 30px; */
+    margin: 0;
+    overflow: hidden;
+    margin: 25px 0 25px 0;
+    padding: 0 0 50px 0;
+    }
+    
+    img{
+        margin: 10px 0 15px 15px;
+        cursor: pointer;
+        height: 105px;
+        border-radius: 10px;
+        padding: 2px;
+    }
+    
+    

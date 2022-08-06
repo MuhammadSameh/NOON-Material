@@ -1,0 +1,42 @@
+<section class="productSliderContainer">
+
+  <div *ngIf="fetching" class="loader-container">
+    <div class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="shop-now" [routerLink]="['/productcategory/'+goProductPage+'/'+1]">Shop now</button>
+  <mdb-carousel [controls]="true" [dark]="true" [interval]="false" class="carousel">
+    <mdb-carousel-item>
+     <div class="row productSlider">
+           <div class="col" *ngFor="let item of InventoiresP1">
+            <div class="card" [routerLink]="['/product-details/'+item.inventoryId]">
+              <img src="{{item.medias[0]}}" class="card-img-top" alt="Fissure in Sandstone"/>
+              <div class="card-body">
+                <h5 class="card-title">{{item.product.name}}</h5>
+                <p class="card-text">{{item.product.description}}</p>
+                <p class="card-text">{{item.price}} LE</p>
+              </div>
+            </div>
+           </div>
+     </div>
+    </mdb-carousel-item>
+    <mdb-carousel-item>
+      <div class="row productSlider">
+            <div class="col" *ngFor="let item of InventoiresP2">
+             <div class="card">
+               <img src="{{item.medias[0]}}" class="card-img-top" alt="Fissure in Sandstone"/>
+               <div class="card-body">
+                 <h5 class="card-title">{{item.product.name}}</h5>
+                 <p class="card-text">{{item.product.description}}</p>
+                 <p class="card-text">{{item.price}}</p>
+               </div>
+             </div>
+            </div>
+      </div>
+     </mdb-carousel-item>
+  </mdb-carousel>
+</section>

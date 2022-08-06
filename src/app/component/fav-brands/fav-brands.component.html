@@ -1,0 +1,16 @@
+<section class="favBrands row">
+    <div  class="row">
+        <img src="../../../assets/brands/PraYourFavBrands.png">
+    </div>
+
+<div class="row row-cols-1 row-cols-md-6 row-cols-sm-3">
+    <div class="col" *ngFor="let item of allbrands">
+        <a>
+            <img src="{{item.logo}}" [routerLink]="['/categorybrand/'+item.name+'/'+1]" class="card-img-top" alt="Elaraby">
+        </a>
+    </div>
+</div>
+</section>
+
+
+

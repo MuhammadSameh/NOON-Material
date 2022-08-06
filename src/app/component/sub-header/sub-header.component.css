@@ -1,0 +1,27 @@
+.sub-header{
+    height: 150px;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 40px;
+   }
+.sub-header img{
+   max-width: 100px;
+}
+.sub-header img:hover{
+   cursor:pointer
+}
+
+.productSlider{
+
+}
+
+.subHeaderSubcate{
+    height: 150px;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.subHeaderSubcate a{
+    text-decoration: none;
+    color: rgb(78, 78, 78);
+}

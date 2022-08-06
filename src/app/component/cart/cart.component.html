@@ -1,0 +1,72 @@
+<ng-container *ngIf="activatedCart!= undefined">
+
+
+<section class="row cart">
+     <div class="col-8 cartProducts">
+          <h3>Cart<span> ( {{activatedCart.cartItems.length}} ) item</span></h3>
+          <header class="cartHeader"></header>
+                <div class="cartProductDetails" *ngFor="let item of activatedCart.cartItems">
+                       <div class="Pimg">
+                         <img src="{{item.medias}}" alt="">
+                       </div>
+                       <div class="PDetails">
+                          <span>this product have many feature like : {{item.description}} </span>
+                          <span>Selected Color : {{item.color}}</span>
+                          <span *ngIf="item.size !=null"> Selected Size  : {{item.size}}</span>
+                        <button class="btn" (click)="removeItem(activatedCart.id , item.id)"><i class="fa-solid fa-trash-can"></i> remove </button>
+                    </div>
+                       <div class="PPrice"><span>EGP </span>{{item.price}}</div>
+                       <div class="PAmount">
+                         <select name="amount" [(ngModel)]="item.quantity" (change)="calcTotalPrice()">
+                              <option *ngFor="let num of item.avalibleQuantityArr" value={{num}} [selected]="num == item.quantity"> {{num}}</option>
+                         </select>
+                       </div>
+                </div>
+
+     </div>
+     <div class="col-4 order">
+          <h3>Order Summary</h3>
+          <hr>
+          <div class="totlaPrice">
+           <h3>totla</h3>
+           <h3><span>EGP</span>{{totalPrice}}</h3>
+          </div>
+          <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+               CHECKOUT
+          </button>
+
+
+
+          <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalLabel">Please Enter those Information for Making Order</h5>
+           <button #close type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+             <from>
+               <!-- street: string,
+               city: string,
+               postalCode: string -->
+                  <label for="street">Street</label>
+                  <input type="text" id="street" name="street" class="form-control" [(ngModel)]="OrderDetails.street">
+                  <label for="city">City</label>
+                  <input type="text" id="city" name="city" class="form-control" [(ngModel)]="OrderDetails.city">
+                  <label for="postalCode">Postal Code</label>
+                  <input type="text" id="postalCode" name="postalCode" class="form-control" [(ngModel)]="OrderDetails.postalCode">
+            
+                <button type="button" class="btn btn-primary" (click)="MakeOrder()">Continue Order Process</button>
+                </from>
+         </div>
+        
+       </div>
+     </div>
+   </div>
+
+
+
+     </div>
+</section>
+</ng-container>

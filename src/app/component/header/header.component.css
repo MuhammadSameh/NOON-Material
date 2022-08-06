@@ -1,0 +1,9 @@
+
+.main-header{
+   height: 300px;
+}
+.main-Header-container img{
+    object-fit: cover;
+    height: 315px;
+    width: 100%;
+}

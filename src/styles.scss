@@ -1,0 +1,156 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '~@fortawesome/fontawesome-free/scss/solid.scss';
+@import '~@fortawesome/fontawesome-free/scss/regular.scss';
+@import '~@fortawesome/fontawesome-free/scss/brands.scss';
+ 
+@import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
+
+body{
+    overflow-x: hidden;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.pDetailsCarousel{
+    position: relative;
+}
+.pDetailsCarousel .carousel{ 
+    height: 100%;
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+.pDetailsCarousel .carousel ol li{
+    border-radius: 5px;
+    margin: 5px 0px 5px 10%;
+    padding: 0;
+    height: 89px;
+    width: 80%;
+    background-color: aliceblue;
+    box-sizing: border-box;
+}
+.pDetailsCarousel .carousel ol li img {
+    width:100%;
+    height: 100%;
+}
+.pDetailsCarousel .carousel ol li:active img{
+    border: 2px solid;
+}
+.pDetailsCarousel .carousel .carousel-indicators{
+    position: relative ;  
+    display: flex;
+    flex-flow:column ;
+    justify-content: flex-start;
+}
+.pDetailsCarousel .carousel .carousel-inner{
+    position: relative;
+    height: 100%;
+    }
+    .pDetailsCarousel .carousel .carousel-inner .carousel-item{
+        height: 100%;
+    }
+    .pDetailsCarousel .carousel .carousel-inner .carousel-item img{
+        height: 100%;
+    }
+
+
+.pDetailsCarousel .carousel-indicators button{
+    margin: 0px 0px -11px 10%;
+    padding: 0;
+    height: 89px;
+    width: 80%;
+    background-color: rgb(255, 255, 255);
+}
+
+
+
+.main-Header-container .carousel{ 
+
+}
+
+.carousel-control-next{
+           width: 37px !important;
+        }
+.carousel-control-next-icon{
+        background-color: #fff !important;
+        border-radius: 50%;
+        position: absolute;
+        transition: all .5s ease-in-out;
+}
+
+.carousel-control-next-icon::after{
+    line-height: 1.2;
+    color: black;
+}
+
+.carousel-control-prev{
+    width: 37px !important;
+}
+
+.carousel-control-prev-icon{
+    background-color: #fff !important;
+    border-radius: 50%;
+    position: absolute;
+    transition: all .5s ease-in-out;
+}
+
+.carousel-control-prev-icon::after{
+line-height: 1.2;
+color: black;
+}
+
+
+
+
+/*
+.pDetailsCarousel{
+    position: relative;
+}
+.pDetailsCarousel .carousel{ 
+    height: 100%;
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+.pDetailsCarousel .carousel .carousel-indicators{
+    position: relative ;  
+    display: flex;
+    flex-flow:column ;
+    justify-content: flex-start;
+}
+.pDetailsCarousel .carousel .carousel-inner{
+    position: relative;
+    height: 100%;
+    background-color: aqua;
+    }
+    .pDetailsCarousel .carousel .carousel-inner .carousel-item{
+        height: 100%;
+    }
+    .pDetailsCarousel .carousel .carousel-inner .carousel-item img{
+        height: 100%;
+    }
+
+
+.pDetailsCarousel .carousel-indicators button{
+    margin: 0px 0px -11px 10%;
+    padding: 0;
+    height: 89px;
+    width: 80%;
+    background-color: aliceblue;
+}*/

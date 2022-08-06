@@ -1,0 +1,17 @@
+
+<section class="contianer">
+    <header class="header-static">
+        <img src="{{activeImg}}">
+     </header>
+     
+     <div class="test">
+         <div class="" *ngFor="let item of subCates">
+             <img src="{{item.logoUrl}}" [routerLink]="['/productcategory/'+item.name+'/1']">
+            </div>
+     </div>
+
+     <div *ngFor="let item of subCates ; let i = index">
+        <app-product-slider *ngIf="i<2" [product_type]="item.name"></app-product-slider>
+     </div>
+</section>
+

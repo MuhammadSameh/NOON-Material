@@ -1,0 +1,126 @@
+
+<mdb-carousel [controls]="true" [dark]="true" [interval]="false" class="carousel">
+  <mdb-carousel-item>
+   <div class="sub-header">
+         <div class="colsdsdd" *ngFor="let item of subCateSlid1">
+            <img src="{{item.logoUrl}}"  [routerLink]="['/productcategory/'+item.name+'/'+1]" alt="Fissure in Sandstone"/>
+         </div>
+   </div>
+  </mdb-carousel-item>
+  <mdb-carousel-item>
+    <div class="sub-header">
+          <div class="colasdas" *ngFor="let item of subCateSlid2">
+             <img src="{{item.logoUrl}}" [routerLink]="['/productcategory/'+item.name+'/'+1]" alt="Fissure in Sandstone"/>
+          </div>
+    </div>
+   </mdb-carousel-item>
+</mdb-carousel>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+
+
+<mdb-carousel [controls]="true" [indicators]="true" class="sub-header">
+
+  <mdb-carousel-item class="carsoulPage1">
+   <div class="row subHeaderContainer">
+        <div class="subHeaderSubcate col-2">
+          <a href="tv">
+            <div class="subPrdimg"></div>
+            <h3>Tv</h3>
+          </a>
+        </div>
+        <div class="subHeaderSubcate col-2">
+          <a href="mobiles">
+            <div class="subPrdimg"></div>
+            <h3>mobiles</h3>
+          </a>
+        </div>
+        <div class="subHeaderSubcate col-2">
+          <a href="smartwatch">
+            <div class="subPrdimg"></div>
+            <h3>smart watch</h3>
+          </a>
+        </div>
+        <div class="subHeaderSubcate col-2">
+          <a href="labtop">
+            <div class="subPrdimg"></div>
+            <h3>labtop</h3>
+          </a>
+        </div>
+        <div class="subHeaderSubcate col-2">
+          <a href="headphone">
+            <div class="subPrdimg"></div>
+            <h3>head phone</h3>
+          </a>
+        </div>
+        <div class="subHeaderSubcate col-2">
+          <a href="women-clothes">
+            <div class="subPrdimg"></div>
+            <h3>women clothes</h3>
+          </a>
+        </div>
+   </div>
+  </mdb-carousel-item>
+
+  <mdb-carousel-item class="carsoulPage2">
+    <div class="row subHeaderContainer">
+         <div class="subHeaderSubcate col-2">
+           <a href="men-clothes">
+             <div class="subPrdimg"></div>
+             <h3>men clothes</h3>
+           </a>
+         </div>
+         <div class="subHeaderSubcate col-2">
+           <a href="furneture">
+             <div class="subPrdimg"></div>
+             <h3>furneture</h3>
+           </a>
+         </div>
+         <div class="subHeaderSubcate col-2">
+           <a href="cooking-supllies">
+             <div class="subPrdimg"></div>
+             <h3>cooking supllies</h3>
+           </a>
+         </div>
+         <div class="subHeaderSubcate col-2">
+           <a href="cleaning">
+             <div class="subPrdimg"></div>
+             <h3>cleaning</h3>
+           </a>
+         </div>
+         <div class="subHeaderSubcate col-2">
+           <a href="glasses">
+             <div class="subPrdimg"></div>
+             <h3>glasses</h3>
+           </a>
+         </div>
+         <div class="subHeaderSubcate col-2">
+           <a href="watches">
+             <div class="subPrdimg"></div>
+             <h3>watches</h3>
+           </a>
+         </div>
+    </div>
+   </mdb-carousel-item>
+ 
+  </mdb-carousel>
+
+
+  
+  -->  

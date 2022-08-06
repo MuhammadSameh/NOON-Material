@@ -1,0 +1,318 @@
+     <!-- Modal 1 (sign in) -->
+     <div class="modal fade" id="signintarget" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Welcome back !<br>
+                <span>Sign in to your account</span><br>
+                <span>Don't have an account? 
+                    <a class="signIn" (click)="closeAllDialog()" data-toggle="modal" data-target="#signuptarget">Sign Up</a> 
+                </span>
+              </h5>
+              <button #sing_in type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" >
+              <form #loginForm="ngForm" #loginFormValue>
+               <!-- email -->
+               <div class="form-group row">
+                <label for="LoginEmail" class="col-sm-3 col-form-label">Email</label>
+                <div class="col-sm-9" >
+                  <input #emailLogin="ngModel"  type="email" class="form-control" placeholder="email" id="LoginEmail" name="email" required [(ngModel)] ="userLogin.email" pattern="^([\w]{1,})+@[\w]{4,}[\\.][a-z]{3,}">
+                  <div class="errorContainer row">
+                        <div class="errorMes" [hidden]="emailLogin.invalid && emailLogin.untouched">
+                          <p *ngIf="emailLogin.errors?.['required']" class="text-danger">this field is required</p>
+                          <p *ngIf="emailLogin.errors?.['pattern']" class="text-danger">wrong pattern Ex: test@gmail.com</p>
+                          </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- password -->
+              <div class="form-group row">
+                <label for="LoginPassword" class="col-sm-3 col-form-label">password</label>
+                <div class="col-sm-9" >
+                  <input #passwordLogin="ngModel"  type="password" class="form-control" placeholder="password" id="LoginPassword" name="password" required [(ngModel)] ="userLogin.password" (keyup)="passValidation(pass.value)" pattern="([a-zA-Z]{2,})+[0-9]{7,}">
+                  <div class="errorContainer row">
+                        <div class="errorMes" [hidden]="passwordLogin.invalid && passwordLogin.untouched">
+                          <p *ngIf="passwordLogin.errors?.['required']" class="text-danger">this field is required</p>
+                          <p *ngIf="passwordLogin.errors?.['pattern']" class="text-danger"><span *ngIf="lowChar"> - add at leaset 2 charcter CAPITAL or small</span><span *ngIf="lowNumber">you must enter at leaset 7 numbers </span></p>
+                          <p *ngIf="loginErrors!=''">{{loginErrors}}</p>
+                        </div>
+                  </div>
+                </div>
+              </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn" form="loginForm" (click)="Login()" [disabled]="!loginForm.valid">Sign In</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+         <!-- Modal 2 (sign up) -->
+     <div class="modal fade signUp" id="signuptarget" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                <span>Create an account <br>
+                  Already have an account? Sign In <br></span>
+                <span>Don't have an account? </span></h5>
+              <button #sign_up (click)="closeAllDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="registerForm" #regForm="ngForm" >
+                <!-- username -->
+                <div class="form-group row userName">
+                  <label for="inputuserName" class="col-sm-3 col-form-label">User Name</label>
+                  <div class="col-sm-9" >
+                    <input #userName="ngModel" #tt type="text" class="form-control" placeholder="userName" name="userName" required [(ngModel)] ="userRegister.userName" minlength="6">
+                    <div class="errorContainer row">
+                          <div class="errorMes" [hidden]="userName.invalid && userName.untouched">
+                            <p *ngIf="userName.errors?.['required']" class="text-danger">this field is required</p>
+                            <p *ngIf="userName.errors?.['minlength']" class="text-danger">at least 6 character required</p>
+                            <p *ngIf="ResiterationErrors.InvalidUserName !=''" class="text-danger">{{ResiterationErrors.InvalidUserName}}</p>
+                            <p *ngIf="ResiterationErrors.DuplicateUserName !=''" class="text-danger">{{ResiterationErrors.DuplicateUserName}}</p>
+                          </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- email -->
+                <div class="form-group row userName">
+                  <label for="email" class="col-sm-3 col-form-label">Email</label>
+                  <div class="col-sm-9" >
+                    <input #emailSignUp="ngModel"  type="email" class="form-control" placeholder="email" name="email" required [(ngModel)] ="userRegister.email" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
+                    <div class="errorContainer row">
+                          <div class="errorMes" [hidden]="emailSignUp.invalid && emailSignUp.untouched">
+                            <p *ngIf="emailSignUp.errors?.['required']" class="text-danger">this field is required</p>
+                            <p *ngIf="emailSignUp.errors?.['pattern']" class="text-danger">wrong pattern Ex: test@gmail.com</p>
+                            </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- password -->
+                <div class="form-group row userName">
+                  <label for="password" class="col-sm-3 col-form-label">password</label>
+                  <div class="col-sm-9" >
+                    <input #pass #passwordSignUp="ngModel"  type="password" class="form-control" placeholder="password" name="password" required [(ngModel)] ="userRegister.password" (keyup)="passValidation(pass.value)" pattern="([a-zA-Z]{2,})+[0-9]{7,}">
+                    <div class="errorContainer row">
+                          <div class="errorMes" [hidden]="passwordSignUp.invalid && passwordSignUp.untouched">
+                            <p *ngIf="passwordSignUp.errors?.['required']" class="text-danger">this field is required</p>
+                            <p *ngIf="passwordSignUp.errors?.['pattern']" class="text-danger"><span *ngIf="lowNumber">you must enter at least 7 numbers <br></span><span *ngIf="lowChar"> - add at leaset 4 charcter CAPITAL or small</span></p>
+                            <!-- <p>error from server</p> -->
+                          </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- confirm password -->  
+                <div class="form-group row userName">
+                  <label for="passwordConfirmation" class="col-sm-3 col-form-label">password Confirmation</label>
+                  <div class="col-sm-9" >
+                    <input #confpass #confirmPassword="ngModel"  type="passwordConfirmation" class="form-control" placeholder="passwordConfirmation" name="passwordConfirmation" required [(ngModel)] ="userRegister.passwordConfirmation" (keyup)="confirmationPass(pass.value,confpass.value)">
+                    <div class="errorContainer row">
+                          <div class="errorMes" [hidden]="confirmPassword.invalid && confirmPassword.untouched">
+                            <p *ngIf="confirmPassword.errors?.['required']" class="text-danger">this field is required</p>
+                            <p *ngIf="pass.value !=confpass.value && confpass.value !='' " class="text-danger">password doesnot match</p>
+                            </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- address-->                
+                <div class="form-group row userName">
+                  <label for="address" class="col-sm-3 col-form-label">address</label>
+                  <div class="col-sm-9" >
+                    <input #address="ngModel"  type="address" class="form-control" placeholder="address" name="address" [(ngModel)] ="userRegister.address" required minlength="6">
+                    <div class="errorContainer row">
+                          <div class="errorMes" [hidden]="address.invalid && address.untouched">
+                              <p *ngIf="address.errors?.['required']" class="text-danger">this field is required</p>
+                              <p *ngIf="address.errors?.['minlength']" class="text-danger">You Must Enter At Least 6 character</p>
+                          </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <!--[disabled]="!regForm.valid"-->
+              <button type="submit" class="btn" form="registerForm" (click)="register(regForm)">Create An Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    
+
+
+
+
+
+      
+
+      <!--
+
+
+
+     <div class="modal fade" id="signintarget" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Welcome back !<br>
+              <span>Sign in to your account</span><br>
+              <span>Don't have an account? 
+                  <a class="signIn" (click)="closeAllDialog()" data-toggle="modal" data-target="#signuptarget">Sign in</a> 
+              </span>
+            </h5>
+            <button #sing_in type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" >
+            <form #loginForm="ngForm" #loginFormValue>
+             <div class="form-group row userName">
+              <label for="email" class="col-sm-3 col-form-label">Email</label>
+              <div class="col-sm-9" >
+                <input #email="ngModel"  type="email" class="form-control" placeholder="email" name="email" required [(ngModel)] ="userRegister.email" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
+                <div class="errorContainer row">
+                      <div class="errorMes" [hidden]="email.invalid && email.untouched">
+                        <p *ngIf="email.errors?.['required']" class="text-danger">this field is required</p>
+                        <p *ngIf="email.errors?.['pattern']" class="text-danger">wrong pattern Ex: test@gmail.com</p>
+                        </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row userName">
+              <label for="password" class="col-sm-3 col-form-label">password</label>
+              <div class="col-sm-9" >
+                <input #pass #password="ngModel"  type="password" class="form-control" placeholder="password" name="password" required [(ngModel)] ="userRegister.password" (keyup)="passValidation(pass.value)" pattern="([a-zA-Z]{2,})+[0-9]{7,}">
+                <div class="errorContainer row">
+                      <div class="errorMes" [hidden]="password.invalid && password.untouched">
+                        <p *ngIf="password.errors?.['required']" class="text-danger">this field is required</p>
+                        <p *ngIf="password.errors?.['pattern']" class="text-danger"><span *ngIf="lowChar"> - add at leaset 2 charcter CAPITAL or small</span><span *ngIf="lowNumber">you must enter numbers form 0 - 9 at leaset 7 numbers  <br></span></p>
+                        <p *ngIf="loginErrors!=''">{{loginErrors}}</p>
+                      </div>
+                </div>
+              </div>
+            </div>
+            </form>
+            <a href="retreive/endpoint">Forget your password</a>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn" form="loginForm" (click)="Login(loginForm)" [disabled]="!loginForm.valid">Sign In</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   <div class="modal fade signUp" id="signuptarget" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              <span>Create an account <br>
+                Already have an account? Sign In <br></span>
+              <span>Don't have an account? </span></h5>
+            <button (click)="closeAllDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="registerForm" #regForm="ngForm" >
+            
+              <div class="form-group row userName">
+                <label for="inputuserName" class="col-sm-3 col-form-label">User Name</label>
+                <div class="col-sm-9" >
+                  <input #userName="ngModel" #tt type="text" class="form-control" placeholder="userName" name="userName" required [(ngModel)] ="userRegister.userName" minlength="6">
+                  <div class="errorContainer row">
+                        <div class="errorMes" [hidden]="userName.invalid && userName.untouched">
+                          <p *ngIf="userName.errors?.['required']" class="text-danger">this field is required</p>
+                          <p *ngIf="userName.errors?.['minlength']" class="text-danger">at least 6 character required</p>
+                          <p *ngIf="ResiterationErrors.InvalidUserName !=''" class="text-danger">{{ResiterationErrors.InvalidUserName}}</p>
+
+                          </div>
+                  </div>
+                </div>
+              </div>
+
+    
+              <div class="form-group row userName">
+                <label for="email" class="col-sm-3 col-form-label">Email</label>
+                <div class="col-sm-9" >
+                  <input #email="ngModel"  type="email" class="form-control" placeholder="email" name="email" required [(ngModel)] ="userRegister.email" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
+                  <div class="errorContainer row">
+                        <div class="errorMes" [hidden]="email.invalid && email.untouched">
+                          <p *ngIf="email.errors?.['required']" class="text-danger">this field is required</p>
+                          <p *ngIf="email.errors?.['pattern']" class="text-danger">wrong pattern Ex: test@gmail.com</p>
+                          <p *ngIf="ResiterationErrors.DuplicateUserName !=''" class="text-danger">{{ResiterationErrors.DuplicateUserName}}</p>
+                          </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row userName">
+                <label for="password" class="col-sm-3 col-form-label">password</label>
+                <div class="col-sm-9" >
+                  <input #pass #password="ngModel"  type="password" class="form-control" placeholder="password" name="password" required [(ngModel)] ="userRegister.password" (keyup)="passValidation(pass.value)" pattern="([a-zA-Z]{2,})+[0-9]{7}">
+                  <div class="errorContainer row">
+                        <div class="errorMes" [hidden]="password.invalid && password.untouched">
+                          <p *ngIf="password.errors?.['required']" class="text-danger">this field is required</p>
+                          <p *ngIf="password.errors?.['pattern']" class="text-danger"><span *ngIf="lowNumber">you must enter number form 0 - 9 <br></span><span *ngIf="lowChar"> - add at leaset 4 charcter CAPITAL or small</span></p>
+                          <p>error from server</p>
+                        </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row userName">
+                <label for="passwordConfirmation" class="col-sm-3 col-form-label">password Confirmation</label>
+                <div class="col-sm-9" >
+                  <input #confpass #confirmPassword="ngModel"  type="passwordConfirmation" class="form-control" placeholder="passwordConfirmation" name="passwordConfirmation" required [(ngModel)] ="userRegister.passwordConfirmation" (keyup)="confirmationPass(pass.value,confpass.value)">
+                  <div class="errorContainer row">
+                        <div class="errorMes" [hidden]="confirmPassword.invalid && confirmPassword.untouched">
+                          <p *ngIf="confirmPassword.errors?.['required']" class="text-danger">this field is required</p>
+                          <p *ngIf="pass.value !=confpass.value && confpass.value !='' " class="text-danger">password doesnot match</p>
+                          </div>
+                  </div>
+                </div>
+              </div>
+
+              
+              <div class="form-group row userName">
+                <label for="address" class="col-sm-3 col-form-label">address</label>
+                <div class="col-sm-9" >
+                  <input #address="ngModel"  type="address" class="form-control" placeholder="address" name="address" [(ngModel)] ="userRegister.address" >
+                  <div class="errorContainer row">
+                        <div class="errorMes" [hidden]="address.invalid && address.untouched">
+                            <p *ngIf="address.errors?.['required']" class="text-danger">this field is required</p>
+                        </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn" form="registerForm"[disabled]="!regForm.valid" (click)="register(regForm)">Create An Account</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+      -->

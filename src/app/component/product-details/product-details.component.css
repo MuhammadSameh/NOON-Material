@@ -1,0 +1,82 @@
+h5{
+    font-size: .8rem;
+    margin-bottom: 0;
+    
+}
+p{
+    font-size: .7rem;
+    color: rgb(185, 185, 185);
+    font-family: sans-serif;
+}
+h2{
+    font-size: 1.5rem;
+    font-family: sans-serif;
+}
+h4{
+    font-size: 1.3rem;
+    font-family: sans-serif;   
+    color: rgb(61, 61, 61); 
+}
+
+.pDetails{
+    text-align: left;
+}
+.pDetails .advertisement{
+    background: url("https://k.nooncdn.com/cms/pages/20220419/7e4b7c8e9d1f4d6dc041e183e07ff1e1/en_pdp-01.png");
+    background-size: cover;
+    width: 100%;
+    height: 90px;
+}
+.pDetails  .addCart{
+display: flex;
+justify-content: flex-start;
+margin: 15px 0 15px 0;
+}
+
+.pDetails p{
+text-align: center;
+}
+
+.pDetails  .addCart select{
+    width: 10%;
+    margin-right: 5%;
+}
+.pDetails  .addCart button{
+    width: 85%;
+    margin-left: 7.5%;
+    margin-bottom: 8px;
+}
+
+.pDetails .cashback{
+    
+}
+.cashback ul{
+    list-style: none;
+}
+
+.confirmbody{
+
+}
+.confirmbody .confirmImag img{
+  width: 100%;
+  height: 186px;
+}
+.confirmbody .confirmDetails{}
+
+
+.size{
+    margin: 20px 20px 20px 0 ;
+}
+
+.sizeBox{
+    padding: 5px 10px 5px 10px;
+    border: 2px solid #000;
+    margin: 15px 5px;
+    border-radius:3px;
+    transition: all .3s ease-in-out;
+}
+.sizeBox:hover{
+    background-color:rgb(255, 255, 0);
+    color: rgb(0, 0, 0);
+    border: none;
+}

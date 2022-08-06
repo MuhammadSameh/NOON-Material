@@ -1,0 +1,375 @@
+<section class="productContainer row">
+    <div class="col-3 productFilteration"> 
+
+<h4>Filteration</h4>
+<mdb-accordion [multiple]="true">
+  <mdb-accordion-item>
+    <ng-template mdbAccordionItemHeader> Price(EGP)</ng-template>
+    <ng-template mdbAccordionItemBody>
+              <div class="minMaxPrice">
+                    <div class=""><input type="number" min=100 name="minPrice" [(ngModel)]="filteration.minPrice"></div>
+                    <div class="">To</div>
+                    <div class=""><input type="number" min=100 name="maxPrice" [(ngModel)]="filteration.maxPrice"></div>
+                    <div class=""><button class="btn" (click)="changeFilteration()">Go</button></div>                 
+              </div>
+
+    </ng-template>
+  </mdb-accordion-item>
+
+  <mdb-accordion-item>
+    <ng-template mdbAccordionItemHeader> Color </ng-template>
+    <ng-template mdbAccordionItemBody>
+            <div class="accordion-body colorFilteration">
+              <div class="row">
+                  <div class="col-6"><img src="https://z.nooncdn.com/cms/pages/20181025/0ce4c3a5d392155933d4571ef91fc179/blue.svg" (click)="changeColor('blue')"> Blue</div>
+                  <div class="col-6"><img src="https://z.nooncdn.com/cms/pages/20181025/0ce4c3a5d392155933d4571ef91fc179/black.svg" (click)="changeColor('black')"> Black</div>
+              </div>
+              <div class="row">
+                  <div class="col-6"><img src="https://z.nooncdn.com/cms/pages/20181025/0ce4c3a5d392155933d4571ef91fc179/grey.svg" (click)="changeColor('gray')"> Gray</div>
+                  <div class="col-6"><img src="https://z.nooncdn.com/cms/pages/20181025/0ce4c3a5d392155933d4571ef91fc179/green.svg" (click)="changeColor('green')"> Green</div>
+            </div>
+            <div class="row">
+                  <div class="col-6"><img src="https://z.nooncdn.com/cms/pages/20181025/0ce4c3a5d392155933d4571ef91fc179/white.svg" (click)="changeColor('white')"> White</div>
+                  <div class="col-6"><img src="https://z.nooncdn.com/cms/pages/20181025/0ce4c3a5d392155933d4571ef91fc179/red.svg" (click)="changeColor('red')"> Red</div>
+            </div>
+
+          </div>
+    </ng-template>
+  </mdb-accordion-item>
+
+  <mdb-accordion-item>
+    <ng-template mdbAccordionItemHeader> Brand </ng-template>
+    <ng-template mdbAccordionItemBody>
+            <!-- <input type="text" class="SeachBrandI" name="seachBrand" placeholder="search"> -->
+            <div class="accordion-body" *ngFor="let item of totalBrand">
+                <div class="row">
+                    <div class="col-1">
+                        <input type="radio" name={{item.name}} id={{item.name}} value={{item.brandId}} [(ngModel)]="filteration.brand" (change)="changeFilteration()" >
+                    </div>
+                    <div class="col-11">
+                      <label for={{item.name}}>{{item.name}}</label>
+                  </div>
+                </div>
+            </div>
+    </ng-template>
+  </mdb-accordion-item>
+</mdb-accordion>
+
+
+  </div>
+      
+     <div class="col-9 productCards">
+     
+        <div *ngIf="fetching" class="loader-container">
+            <div class="text-center">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div>
+     
+        <div class="sort">
+        <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dispaly   
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a (click)="productPerPage(10)" class="dropdown-item">10 per page</a>
+              <a (click)="productPerPage(20)" class="dropdown-item">20 per page</a>
+              <a (click)="productPerPage(50)" class="dropdown-item">50 per page</a>
+            </div>
+          </div>
+          <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort by Price   
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a (click)="productPerPrice(true)" class="dropdown-item">sort by Price Ascending</a>
+                  <a (click)="productPerPrice(false)" class="dropdown-item">Sort By Price Descending</a>
+                </div>
+          </div>
+
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Sort by Date  
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a (click)="productPerPrice('')" class="dropdown-item">Recently Arrived</a>
+              </div>
+          </div>
+
+        </div>
+         
+        <div class="productList"> 
+       <ng-container *ngIf="! (response ==undefined)">
+                <div class="card" *ngFor="let item of response.data">
+                    <img class="card-img-top" src={{item.medias[0]}} alt="Card image cap">
+                    <div class="card-body">
+                    <h5 class="card-title">{{item.product.name}}</h5>
+                    <h5 class="card-title">{{item.price}} LE</h5>
+                    <p class="card-text">{{item.product.description}}</p>
+                    <button class="btn btn-primary" [routerLink]="['/product-details/'+item.inventoryId]" >Details</button>
+                 </div>
+                </div>
+       </ng-container>
+        </div>
+
+        <ng-container *ngIf="(filteration.minPrice==null &&filteration.maxPrice ==null && filteration.color==''&&filteration.brand==null)">
+          <nav aria-label="Page navigation" *ngIf="GoBrandGoProduct !=''">
+            <ul class="pagination justify-content-center">
+              <li class="page-item prev">
+                <button (click)="prevPage()" [disabled] = "pageIndex === 1 " class="btn" >
+                    <a class="page-link" aria-label="Previous" >
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </button>
+              </li>
+
+              <li *ngFor="let item of totalPagesArr" class="pageNumber">
+                <a class="page-link" [routerLink]="['/'+ GoBrandGoProduct +'/'+categoryName+'/'+ +item]">{{item}}</a>
+              </li>
+              
+              <li class="page-item next">
+                <button (click)="nextPage()" [disabled] = "pageIndex ===totalPagesArr.length" class="btn" >
+                <a class="page-link" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </ng-container>
+
+
+        <ng-container *ngIf="!(filteration.minPrice==null &&filteration.maxPrice ==null && filteration.color==''&&filteration.brand==null)">
+          <nav aria-label="Page navigation" *ngIf="GoBrandGoProduct !=''">
+            <ul class="pagination justify-content-center">
+              <li class="page-item prev">
+                <button (click)="prevPageFiltertion()" [disabled] = "pageIndex === 1 " class="btn" >
+                    <a class="page-link" aria-label="Previous" >
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </button>
+              </li>
+        
+              <li *ngFor="let item of totalPagesArr" class="pageNumber">
+                <a class="page-link" (click)="changePageIndexForFilteration(+item)">{{item}}</a>
+              </li>
+              <!--[routerLink]="['/'+ GoBrandGoProduct +'/'+categoryName+'/'+ +item]"-->
+              
+              <li class="page-item next">
+                <button (click)="nextPageFiltertion()" [disabled] = "pageIndex ===totalPagesArr.length" class="btn" >
+                <a class="page-link" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </ng-container>
+
+
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+
+<section class="productContainer row">
+    <div class="col-3 productFilteration"> 
+      
+        <h4>Filteration</h4>
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Price(EGP)
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+        
+                <div class="row">
+                        <div class="col-6 row">
+                            <div class="col-7"><input type="number" min=100 name="minPrice" [(ngModel)]="filteration.minPrice"></div>
+                            <div class="col-5">To</div>
+                        </div>
+                        <div class="col-6 row">
+                            <div class="col-7"><input type="number" min=100 name="maxPrice" [(ngModel)]="filteration.maxPrice"></div>
+                            <div class="col-5"><input type="button" value="Go" (click)="changeFilteration()"></div>                 
+                        </div>
+                </div>
+
+
+                </div>
+            </div>
+            </div>
+            <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                Color
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                <div class="accordion-body colorFilteration">
+                    <div class="row">
+                         <div class="col-6"><img src="https://z.nooncdn.com/cms/pages/20181025/0ce4c3a5d392155933d4571ef91fc179/blue.svg" (click)="changeColor('blue')"> Blue</div>
+                         <div class="col-6"><img src="https://z.nooncdn.com/cms/pages/20181025/0ce4c3a5d392155933d4571ef91fc179/black.svg" (click)="changeColor('black')"> Black</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6"><img src="https://z.nooncdn.com/cms/pages/20181025/0ce4c3a5d392155933d4571ef91fc179/grey.svg" (click)="changeColor('gray')"> Gray</div>
+                        <div class="col-6"><img src="https://z.nooncdn.com/cms/pages/20181025/0ce4c3a5d392155933d4571ef91fc179/green.svg" (click)="changeColor('green')"> Green</div>
+                   </div>
+                   <div class="row">
+                        <div class="col-6"><img src="https://z.nooncdn.com/cms/pages/20181025/0ce4c3a5d392155933d4571ef91fc179/white.svg" (click)="changeColor('white')"> White</div>
+                        <div class="col-6"><img src="https://z.nooncdn.com/cms/pages/20181025/0ce4c3a5d392155933d4571ef91fc179/silver.svg" (click)="changeColor('red')"> Red</div>
+                   </div>
+                   <div class="row">
+                        <div class="col-6"><img src="https://z.nooncdn.com/cms/pages/20181025/0ce4c3a5d392155933d4571ef91fc179/red.svg"> Red</div>
+                        <div class="col-6"><img src="https://z.nooncdn.com/cms/pages/20181025/0ce4c3a5d392155933d4571ef91fc179/silver.svg"> Golden</div>
+                    </div>
+                </div>
+            </div>
+            </div>
+      
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                   Brand
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+                    <input type="text" class="SeachBrandI" name="seachBrand" placeholder="search">
+                    <div class="accordion-body" *ngFor="let item of totalBrand">
+                        <div class="row">
+                            <div class="col-2">
+                                <label for={{item.name}}>{{item.name}}</label>
+                            </div>
+                            <div class="col-10">
+                                <input type="radio" name={{item.name}} id={{item.name}} value={{item.brandId}} [(ngModel)]="filteration.brand" (change)="changeFilteration()" >
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                </div>
+        </div>
+
+    </div>
+     <div class="col-9 productCards">
+     
+        <div *ngIf="fetching" class="loader-container">
+            <div class="text-center">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div>
+     
+        <div class="row">
+        <div class="dropdown col-2">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dispaly   
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a (click)="productPerPage(10)" class="dropdown-item">10 per page</a>
+              <a (click)="productPerPage(20)" class="dropdown-item">20 per page</a>
+              <a (click)="productPerPage(50)" class="dropdown-item">50 per page</a>
+            </div>
+          </div>
+          <br>
+          <div class="dropdown col-2">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort by   
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a (click)="productPerPrice(true)" class="dropdown-item">sort by Price Ascending</a>
+              <a (click)="productPerPrice(false)" class="dropdown-item">Sort By Price Descending</a>
+            </div>
+          </div>
+     </div>
+          <br>
+        <div class="productList"> 
+       <ng-container *ngIf="! (response ==undefined)">
+                <div class="card" *ngFor="let item of response.data">
+                    <img class="card-img-top" src={{item.medias[0]}} alt="Card image cap">
+                    <div class="card-body">
+                    <h5 class="card-title">{{item.product.name}}</h5>
+                    <h5 class="card-title">{{item.price}} LE</h5>
+                    <p class="card-text">{{item.product.description}}</p>
+                    <button class="btn btn-primary" [routerLink]="['/product-details/'+item.inventoryId]" >Details</button>
+                 </div>
+                </div>
+       </ng-container>
+        </div>
+
+        <nav aria-label="Page navigation example" *ngIf="GoBrandGoProduct !=''">
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
+                <button (click)="prevPage()" [disabled] = "pageIndex ===1" class="btn" >
+                    <a class="page-link" aria-label="Previous" >
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </button>
+              </li>
+
+              <li *ngFor="let item of totalPagesArr">
+                <a class="page-link" [routerLink]="['/'+ GoBrandGoProduct +'/'+categoryName+'/'+ +item]">{{item}}</a>
+              </li>
+              
+              <li class="page-item">
+                <button (click)="nextPage()" [disabled] = "pageIndex ===totalPagesArr.length" class="btn" >
+                <a class="page-link" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+                </button>
+              </li>
+            </ul>
+          </nav>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+-->

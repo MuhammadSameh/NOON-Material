@@ -1,0 +1,119 @@
+<nav class="mainNavbar row">
+    <!--logo-->
+    <div class="logo col-1" [routerLink]="['home']">
+         <img src="https://z.nooncdn.com/s/app/com/noon/design-system/logos/noon-logo-en.svg">
+     </div>
+    <!--search-->
+    <div class="search col-8">
+             <!--input-->
+             <div class="input">
+               <input type="text" class="form-control" aria-label="Text input with dropdown button" />
+               <div class="spinner-border" role="status">
+                 <span class="sr-only"></span>
+               </div>
+             </div>
+         </div>
+ 
+    <!--user-->
+    <div class="userAccount col-3">
+            <!-- Example split danger button -->
+            <div class="user_cart">
+              <div class="dropdown" *ngIf="isLogged">
+                <button class="signIn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   Profile
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" (click)="logout()">Logout</a>
+                </div>
+              </div>
+                <div class="signIn" data-toggle="modal" data-target="#signintarget" *ngIf="!isLogged">
+                 |&nbsp; &nbsp; Sign In &nbsp; <i class="fa-solid fa-user"></i>&nbsp;&nbsp;&nbsp;|
+                </div>
+                 <div *ngIf="activeCart!=0" class="cart" [routerLink]="['/cart/'+activeCart]"><a> &nbsp;&nbsp; Cart <i class="fa-solid fa-cart-arrow-down"></i> </a>
+                 </div>
+            </div>
+
+         
+          
+<app-user (UserLoggedInEvent)="UserLoggedIn($event)"></app-user>
+<!--  -->
+
+      <!--signin bottom-->
+ 
+     </div>
+ 
+      <!--all cate button-->
+
+ </nav>
+ 
+ 
+ 
+ <!--  main category ^     electroincs  fashion  supermarket  home    -->
+ <div class="subNavbar">
+     <button class="MainCateBtn" name="categories" (mouseover)="openMainCate()"> main categories</button>
+      <ul class="SubCateBtn">
+          <li *ngFor="let item of SubCategories" (mouseover)="openSubCate()" (mouseover)="activatedSubCates(item.name,item.categoryId)" [routerLink]="['productcategory/'+item.name+'/'+1]">
+                    {{item.name}}
+          </li>
+      </ul>
+ </div>
+ 
+ 
+ <div class="MainCateContent" *ngIf="mainOpend" (mouseleave)="closeMainCate()">
+   <div class="row">
+       <div class="col-4">
+        <h4>Categories</h4>
+           <ul>
+                <li *ngFor="let item of parentCategories" (mouseover)="activatedCate(item.name,+item.categoryId)"  [routerLink]="['category/'+item.name]">
+                  <ng-container *ngIf="item.parentId ==null">
+                    {{item.name}}
+                  </ng-container>
+                </li>
+           </ul>
+       </div>
+       <div class="col-8 row">
+          <div class="col-6">
+            <h4>{{activeCateName}}</h4>
+            <ul>
+              <ng-container *ngFor="let item of allCategories">
+                     <li *ngIf="item.parentId==activeCateNum" [routerLink]="['productcategory/'+item.name+'/'+1]">
+                             {{item.name}}
+                     </li>
+              </ng-container >
+          </ul>
+         </div>
+             
+          <div class="col-6">
+            <h4>Top brand</h4>
+            <ul>
+              <li *ngFor="let item of activeBrand" [routerLink]="['categorybrand/'+item.name+'/'+1]">
+                {{item.name}}
+              </li>
+            </ul>
+          </div>
+       </div>
+   </div>
+ </div>
+ 
+ 
+ <div class="SubCateContent" *ngIf="subOpend" (mouseleave)="closeSubCate()">
+    <div class="row">
+      <div class="col-2" >
+        <h4>Categories</h4>
+          <ul *ngFor="let item of allCategories">
+            <li *ngIf="item.parentId == activeSubCateNum" [routerLink]="['productcategory/'+item.name+'/'+1]">{{item.name}}</li>
+          </ul>
+      </div>
+      <div class="col-10">
+          <h4>brands</h4>
+          <div class="imgs_container">   
+              <div class="img_prev" *ngFor="let item of activeBrand">
+                      <img src="{{item.logo}}" alt="{{item.name}}" [routerLink]="['categorybrand/'+item.name+'/'+1]">
+              </div>
+          </div>
+      </div>
+    </div>
+ </div> 
+
+
+
